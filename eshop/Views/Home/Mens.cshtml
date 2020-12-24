@@ -1,0 +1,73 @@
+﻿@model eshop.Models.Home.ViewModel
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Mens";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+<div class="single-pro">
+    @foreach (var item in Model.ListOfProducts)
+    {
+        <div class="col-md-3 product-men">
+            <div class="men-pro-item simpleCart_shelfItem">
+                <div class="men-thumb-item">
+                    <img src="../ProductImg/@item.ProductImage" alt="" class="pro-image-front">
+                    <img src="../ProductImg/@item.ProductImage" alt="" class="pro-image-back">
+                    <div class="men-cart-pro">
+                        <div class="inner-men-cart-pro">
+                            <a href="single.html" class="link-product-add-cart">Quick View</a>
+                        </div>
+                    </div>
+
+                    @if (item.IsFeatured == true)
+                    {
+                        <span class="product-new-top">New</span>
+
+                    }
+                    else
+                    {
+                        <span class="product-new-top">Old</span>
+                    }
+
+
+                </div>
+                <div class="item-info-product ">
+                    <h4><a href="single.html"> @item.ProductName</a></h4>
+                    <div class="info-product-price">
+                        <span class="item_price">$@item.Price</span>
+                    </div>
+
+                    @if (item.Quantity > 0)
+                    {
+
+                        using (Html.BeginForm("AddToCart", "Home", new { productId = item.ProductId, url = "Mens" }, FormMethod.Post))
+                        {
+
+                           <button type="submit" value="Add To Cart" class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2"><i class="fa fa-shopping-cart"> Add To Cart</i></button>
+                            
+                            
+                        }
+                        <p>Available</p>
+                    }
+                    else
+                    {
+                        <p>Not Available</p>
+                    }
+
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    }
+    @Html.PagedListPager(Model.ListOfProducts, page => Url.Action("Mens", new { page, search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayItemSliceAndTotal = true })
+</div>
+
+    
+
+    
+
+
+    
+
