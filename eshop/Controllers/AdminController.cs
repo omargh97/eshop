@@ -36,18 +36,17 @@ namespace eshop.Controllers
             List<Tbl_Category> allcategories = _unitOfWork.GetRepositoryInstance<Tbl_Category>().GetAllRecordsIQueryable().Where(i => i.IsDelete == false).ToList();
             return View(allcategories);
         }
-
         public ActionResult AddCategory()
-        {
+        {            
             return UpdateCategory(0);
         }
 
-        public ActionResult UpdateCategory(int categoryId)
+        public ActionResult UpdateCategory(int categoryID)
         {
             Category cd;
-            if (categoryId != null)
+            if ( categoryID != 0)
             {
-                cd = JsonConvert.DeserializeObject<Category>(JsonConvert.SerializeObject(_unitOfWork.GetRepositoryInstance<Tbl_Category>().GetFirstorDefault(categoryId)));
+                cd = JsonConvert.DeserializeObject<Category>(JsonConvert.SerializeObject(_unitOfWork.GetRepositoryInstance<Tbl_Category>().GetFirstorDefault(categoryID)));
             }
             else
             {
